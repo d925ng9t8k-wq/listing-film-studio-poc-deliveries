@@ -18,6 +18,8 @@
       h2 { margin: 0 18px 12px; font-size: 16px; letter-spacing: 0; }
       video { display: block; width: 100%; max-height: 76vh; background: #000; }
       .portrait { width: min(100%, 520px); margin: 0 auto; }
+      .play { display: flex; align-items: center; justify-content: center; gap: 9px; width: calc(100% - 36px); margin: 12px 18px 0; padding: 13px 16px; border: 0; border-radius: 6px; background: #f7f8fa; color: #080b0f; font: inherit; font-weight: 750; cursor: pointer; }
+      .play span { font-size: 18px; line-height: 1; }
       .download { display: block; margin: 12px 18px 0; color: #9eb8ff; font-size: 14px; }
     </style>
   </head>
@@ -36,6 +38,7 @@
         <video controls playsinline preload="metadata" poster="poster-landscape.jpg">
           <source src="https://github.com/d925ng9t8k-wq/listing-film-studio-poc-deliveries/releases/download/twin-hills-poc/twin-hills-landscape.mp4" type="video/mp4" />
         </video>
+        <button class="play" type="button" data-player="#landscape video"><span aria-hidden="true">&#9654;</span> Play landscape</button>
         <a class="download" href="https://github.com/d925ng9t8k-wq/listing-film-studio-poc-deliveries/releases/download/twin-hills-poc/twin-hills-landscape.mp4">Download landscape MP4</a>
       </section>
       <section id="portrait">
@@ -45,8 +48,23 @@
             <source src="https://github.com/d925ng9t8k-wq/listing-film-studio-poc-deliveries/releases/download/twin-hills-poc/twin-hills-portrait.mp4" type="video/mp4" />
           </video>
         </div>
+        <button class="play" type="button" data-player="#portrait video"><span aria-hidden="true">&#9654;</span> Play portrait</button>
         <a class="download" href="https://github.com/d925ng9t8k-wq/listing-film-studio-poc-deliveries/releases/download/twin-hills-poc/twin-hills-portrait.mp4">Download portrait MP4</a>
       </section>
     </main>
+    <script>
+      document.querySelectorAll("[data-player]").forEach((button) => {
+        button.addEventListener("click", async () => {
+          const video = document.querySelector(button.dataset.player);
+          if (!video) return;
+          try {
+            await video.play();
+            button.hidden = true;
+          } catch {
+            video.controls = true;
+          }
+        });
+      });
+    </script>
   </body>
 </html>
